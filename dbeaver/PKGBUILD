@@ -2,7 +2,7 @@
 # Contributor: Arne Hoch <arne@derhoch.de>
 
 pkgname=dbeaver
-pkgver=26.0.5
+pkgver=26.1.1
 pkgrel=1
 pkgdesc="Free universal SQL Client for developers and database administrators (community edition)"
 arch=('x86_64')
@@ -21,18 +21,17 @@ source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/dbeaver/dbeaver/archi
         "${pkgname}.sh"
         "${pkgname}.profile.gz"
         "${pkgname}.hook"
-        "${pkgname}.install")
-sha256sums=('3fdd348cc59a357a9ae016ec110018d7a6d87ba146b6f5d91884790ed424dee9'
-            'c202fda84109733b64b78116e551eaa134e810eee9f1522e6c9e5c5bc36a8a21'
-            '08ba62a214294a92c2b892a4ac26c454a8027e33c5f9b4c4b4c25726c1e81758'
+        "${pkgname}-remove.hook")
+sha256sums=('8affa472ecd8f9b1515779d4c60cae9401cf08980186cb96ca51f30f8fe69c86'
+            '415e8bbe629a97551fdcbc635796ade958f8b6b70e8e4291b78c919c4bf96d4f'
+            '1124f0fffa7b85d95445535f5a0d27775be42ddc1aa010dbb67b477bdfaba50e'
             'e1522945218456f3649a39bc4afd70ce4bd466221519dba7d378f2141a4642ca'
             '32733ab4bc90b45b63eb72677d886961003fd4ed113e07b1028f9877cb2ac735'
             '9480a7d08f680e10c399db070c5a04cbabf282442602a2ef83d1159fe7c3e88b'
             '406a2980806c394670e88b1ae70134900be376c2ea4a4216610591cc8b557526'
             '1863e74bdcf22b7328e6e8487cbebff7d5360e34bde85c1dd226b168b4737034'
             'f8b763ca210bfa4d9a4e407b656ba4f5d1bf2f3f54c67044f7a4dd0c3625fc22'
-            'f8d65dd933049b587a5815ea75a30ef944300b812df383ca1c2dcd68280bc7ab')
-install="${pkgname}.install"
+            '1ff34340f2ec54fc0c1af87a2e056fa1b1130369811d4d380f0bdeced9c307c6')
 
 prepare() {
   # Fix version number in profile file
@@ -132,6 +131,7 @@ package() {
   # Install system hook
   install -m 755 -d "${pkgdir}/usr/share/libalpm/hooks"
   install -m 644 "${srcdir}/${pkgname}.hook" "${pkgdir}/usr/share/libalpm/hooks"
+  install -m 644 "${srcdir}/${pkgname}-remove.hook" "${pkgdir}/usr/share/libalpm/hooks"
 
   # Create configuration file (handled by the hook)
   cd "${pkgdir}/usr/share/dbeaver/configuration/org.eclipse.equinox.simpleconfigurator"
